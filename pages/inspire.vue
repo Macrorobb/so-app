@@ -1,15 +1,20 @@
-<template>
-  <v-layout>
-    <v-flex class="text-center">
-      <img src="/v.png" alt="Vuetify.js" class="mb-5" />
-      <blockquote class="blockquote">
-        &#8220;First, solve the problem. Then, write the code.&#8221;
-        <footer>
-          <small>
-            <em>&mdash;John Johnson</em>
-          </small>
-        </footer>
-      </blockquote>
-    </v-flex>
-  </v-layout>
+<template lang="html">
+  <div>
+    name: 'inspire' <br />
+    params: {{ JSON.stringify($route.params) }} <br />
+    query: {{ JSON.stringify($route.query) }} <br />
+    hash: {{ JSON.stringify($route.hash) }}
+  </div>
 </template>
+
+<script>
+export default {
+  // mounted() {
+  //   console.log('$route.params', this.$route.params)
+  //   console.log('$route.query', this.$route.params)
+  //   console.log('$route.hash', this.$route.params)
+  // }
+}
+</script>
+
+<style lang="css" scoped></style>

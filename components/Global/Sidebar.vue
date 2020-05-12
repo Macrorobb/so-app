@@ -26,13 +26,22 @@ export default {
       items: [
         {
           icon: 'mdi-apps',
-          title: 'SO',
-          to: '/'
+          title: 'Welcome',
+          to: { name: 'index' }
         },
         {
           icon: 'mdi-chart-bubble',
-          title: 'SETTINGS',
-          to: '/inspire'
+          title: 'Inspire',
+          to: {
+            name: 'inspire',
+            query: { username: 'admin', password: '1234' },
+            hash: '#test'
+          }
+        },
+        {
+          icon: 'mdi-sale',
+          title: 'Sale Order',
+          to: { name: 'so' }
         }
       ]
     }
@@ -40,10 +49,10 @@ export default {
   computed: {
     drawer: {
       get() {
-        return this.$store.state.drawer
+        return this.$store.state.layout.drawer
       },
       set(newVal) {
-        this.$store.commit('set_drawer', newVal)
+        this.$store.commit('layout/set_drawer', newVal)
       }
     }
   }

@@ -14,7 +14,7 @@ export default {
   },
   methods: {
     toggleDrawer() {
-      this.$store.commit('set_drawer', !this.$store.state.drawer)
+      this.$store.commit('layout/set_drawer', !this.$store.state.layout.drawer)
     }
   }
 }
