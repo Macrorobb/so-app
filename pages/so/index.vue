@@ -1,100 +1,293 @@
 <template lang="html">
-  <v-container class="grey lighten-5">
+  <div>
     <v-col cols="12">
       <div class="flex font-weight-bold">Sale Order</div>
     </v-col>
-    <v-form>
+
+    <v-card>
+      <v-container>
+        <v-form>
+          <v-row>
+            <v-col cols="12" md="2">
+              <v-text-field label="Doc No." outlined dense></v-text-field>
+            </v-col>
+
+            <v-col cols="12" md="2">
+              <v-text-field label="Doc No. in" outlined dense></v-text-field>
+            </v-col>
+
+            <v-col cols="12" md="2">
+              <v-text-field label="Doc No. Ref." outlined dense></v-text-field>
+            </v-col>
+
+            <v-col cols="12" md="3">
+              <v-dialog
+                ref="dialog"
+                v-model="modal"
+                :return-value.sync="date"
+                persistent
+                width="290px"
+              >
+                <template v-slot:activator="{ on }">
+                  <v-text-field
+                    v-model="dateFormatted"
+                    label="Picker in dialog"
+                    prepend-icon="event"
+                    readonly
+                    outlined
+                    dense
+                    class="set-datetime-icon"
+                    @blur="date = parseDate(dateFormatted)"
+                    v-on="on"
+                  ></v-text-field>
+                </template>
+                <v-date-picker v-model="date" locale="th-th" scrollable>
+                  <v-spacer></v-spacer>
+                  <v-btn text color="primary" @click="modal = false">
+                    Cancel
+                  </v-btn>
+                  <v-btn text color="primary" @click="$refs.dialog.save(date)">
+                    OK
+                  </v-btn>
+                </v-date-picker>
+              </v-dialog>
+            </v-col>
+            <v-col cols="12" md="3">
+              <v-dialog
+                ref="dialog2"
+                v-model="modal2"
+                :return-value.sync="time"
+                persistent
+                width="290px"
+              >
+                <template v-slot:activator="{ on }">
+                  <v-text-field
+                    v-model="time"
+                    label="Picker in dialog"
+                    prepend-icon="access_time"
+                    readonly
+                    outlined
+                    dense
+                    class="set-datetime-icon"
+                    v-on="on"
+                  ></v-text-field>
+                </template>
+                <v-time-picker
+                  v-if="modal2"
+                  v-model="time"
+                  format="24hr"
+                  full-width
+                >
+                  <v-spacer></v-spacer>
+                  <v-btn text color="primary" @click="modal2 = false"
+                    >Cancel</v-btn
+                  >
+                  <v-btn text color="primary" @click="$refs.dialog2.save(time)"
+                    >OK</v-btn
+                  >
+                </v-time-picker>
+              </v-dialog>
+            </v-col>
+            <v-col cols="12" md="6">
+              <v-text-field
+                label="Customer"
+                outlined
+                dense
+                append-icon="search"
+              >
+              </v-text-field>
+            </v-col>
+            <v-col cols="12" md="6">
+              <v-text-field label="Product" outlined dense append-icon="search">
+              </v-text-field>
+            </v-col>
+          </v-row>
+        </v-form>
+      </v-container>
+    </v-card>
+    <v-card class="mt-4">
       <v-container>
         <v-row>
-          <v-col cols="12" md="4">
-            <v-text-field label="Doc No." outlined dense></v-text-field>
+          <v-col cols="12" md="12">
+            <v-text-field label="Product Search" append-icon="search">
+            </v-text-field>
           </v-col>
+          <v-col v-for="item in items" :key="item.id" cols="3">
+            <v-card class="mx-auto" outlined>
+              <v-list-item three-line>
+                <v-list-item-content>
+                  <v-list-item-title class="headline mb-1">
+                    {{ item.name }}
+                  </v-list-item-title>
+                  <v-list-item-subtitle>
+                    <div class="my-4 subtitle-1">
+                      {{ item.price }}
+                    </div>
+                    <div>{{ item.detail }}</div>
+                  </v-list-item-subtitle>
+                </v-list-item-content>
 
-          <v-col cols="12" md="4">
-            <v-text-field label="Doc No. in" outlined dense></v-text-field>
-          </v-col>
+                <v-list-item-avatar tile size="80" color="grey">
+                  <img
+                    src="https://cdn.vuetifyjs.com/images/john.jpg"
+                    alt="John"
+                  />
+                </v-list-item-avatar>
+              </v-list-item>
 
-          <v-col cols="12" md="4">
-            <v-text-field label="Doc No. Ref." outlined dense></v-text-field>
-          </v-col>
-
-          <v-col cols="12" md="4">
-            <v-dialog
-              ref="dialog"
-              v-model="modal"
-              :return-value.sync="date"
-              persistent
-              width="290px"
-            >
-              <template v-slot:activator="{ on }">
+              <v-card-actions>
                 <v-text-field
-                  v-model="dateFormatted"
-                  label="Picker in dialog"
-                  prepend-icon="event"
-                  readonly
-                  outlined
-                  dense
-                  @blur="date = parseDate(dateFormatted)"
-                  v-on="on"
+                  value="0"
+                  append-outer-icon="mdi-minus-circle"
+                  prepend-icon="mdi-plus-circle"
                 ></v-text-field>
-              </template>
-              <v-date-picker v-model="date" scrollable>
-                <v-spacer></v-spacer>
-                <v-btn text color="primary" @click="modal = false">
-                  Cancel
-                </v-btn>
-                <v-btn text color="primary" @click="$refs.dialog.save(date)">
-                  OK
-                </v-btn>
-              </v-date-picker>
-            </v-dialog>
-          </v-col>
-          <v-col cols="12" md="4">
-            <v-dialog
-              ref="dialog2"
-              v-model="modal2"
-              :return-value.sync="time"
-              persistent
-              width="290px"
-            >
-              <template v-slot:activator="{ on }">
-                <v-text-field
-                  v-model="time"
-                  label="Picker in dialog"
-                  prepend-icon="access_time"
-                  readonly
-                  outlined
-                  dense
-                  v-on="on"
-                ></v-text-field>
-              </template>
-              <v-time-picker v-if="modal2" v-model="time" full-width>
-                <v-spacer></v-spacer>
-                <v-btn text color="primary" @click="modal2 = false"
-                  >Cancel</v-btn
-                >
-                <v-btn text color="primary" @click="$refs.dialog2.save(time)"
-                  >OK</v-btn
-                >
-              </v-time-picker>
-            </v-dialog>
+                <v-btn color="primary" small text>Add to Cart</v-btn>
+              </v-card-actions>
+            </v-card>
           </v-col>
         </v-row>
       </v-container>
-    </v-form>
-  </v-container>
+      <v-divider></v-divider>
+
+      <div class="text-center">
+        <v-row justify="center">
+          <v-col cols="12">
+            <v-container class="max-width">
+              <v-pagination
+                v-model="page"
+                class="my-4"
+                :length="10"
+              ></v-pagination>
+            </v-container>
+          </v-col>
+        </v-row>
+      </div>
+    </v-card>
+  </div>
 </template>
 
 <script>
 export default {
   data() {
     return {
+      page: 1,
+      items: [
+        { id: 1, name: 'item1', price: '5,000', detail: 'lorem lorem lorem' },
+        { id: 2, name: 'item2', price: '2,000', detail: 'lorem lorem lorem' },
+        { id: 3, name: 'item3', price: '4,000', detail: 'lorem lorem lorem' },
+        { id: 4, name: 'item4', price: '55,000', detail: 'lorem lorem lorem' },
+        { id: 5, name: 'item5', price: '6,000', detail: 'lorem lorem lorem' },
+        { id: 6, name: 'item5', price: '6,000', detail: 'lorem lorem lorem' },
+        { id: 7, name: 'item5', price: '6,000', detail: 'lorem lorem lorem' },
+        { id: 8, name: 'item5', price: '6,000', detail: 'lorem lorem lorem' },
+        { id: 9, name: 'item5', price: '6,000', detail: 'lorem lorem lorem' },
+        { id: 10, name: 'item5', price: '6,000', detail: 'lorem lorem lorem' }
+      ],
       date: new Date().toISOString().substr(0, 10),
       dateFormatted: this.formatDate(new Date().toISOString().substr(0, 10)),
       menu: false,
       modal: false,
       modal2: false,
-      time: null
+      time: null,
+      dialog: false,
+
+      // modal selected customer
+      search: '',
+      headers: [
+        {
+          text: 'Dessert (100g serving)',
+          align: 'start',
+          sortable: false,
+          value: 'name'
+        },
+        { text: 'Calories', value: 'calories' },
+        { text: 'Fat (g)', value: 'fat' },
+        { text: 'Carbs (g)', value: 'carbs' },
+        { text: 'Protein (g)', value: 'protein' },
+        { text: 'Iron (%)', value: 'iron' }
+      ],
+      desserts: [
+        {
+          name: 'Frozen Yogurt',
+          calories: 159,
+          fat: 6.0,
+          carbs: 24,
+          protein: 4.0,
+          iron: '1%'
+        },
+        {
+          name: 'Ice cream sandwich',
+          calories: 237,
+          fat: 9.0,
+          carbs: 37,
+          protein: 4.3,
+          iron: '1%'
+        },
+        {
+          name: 'Eclair',
+          calories: 262,
+          fat: 16.0,
+          carbs: 23,
+          protein: 6.0,
+          iron: '7%'
+        },
+        {
+          name: 'Cupcake',
+          calories: 305,
+          fat: 3.7,
+          carbs: 67,
+          protein: 4.3,
+          iron: '8%'
+        },
+        {
+          name: 'Gingerbread',
+          calories: 356,
+          fat: 16.0,
+          carbs: 49,
+          protein: 3.9,
+          iron: '16%'
+        },
+        {
+          name: 'Jelly bean',
+          calories: 375,
+          fat: 0.0,
+          carbs: 94,
+          protein: 0.0,
+          iron: '0%'
+        },
+        {
+          name: 'Lollipop',
+          calories: 392,
+          fat: 0.2,
+          carbs: 98,
+          protein: 0,
+          iron: '2%'
+        },
+        {
+          name: 'Honeycomb',
+          calories: 408,
+          fat: 3.2,
+          carbs: 87,
+          protein: 6.5,
+          iron: '45%'
+        },
+        {
+          name: 'Donut',
+          calories: 452,
+          fat: 25.0,
+          carbs: 51,
+          protein: 4.9,
+          iron: '22%'
+        },
+        {
+          name: 'KitKat',
+          calories: 518,
+          fat: 26.0,
+          carbs: 65,
+          protein: 7,
+          iron: '6%'
+        }
+      ]
     }
   },
   computed: {
@@ -112,13 +305,14 @@ export default {
       if (!date) return null
 
       const [year, month, day] = date.split('-')
-      return `${day}/${month}/${year}`
+      return `${day}/${month}/${Number(year) + 543}`
     },
     parseDate(date) {
       if (!date) return null
 
       const [day, month, year] = date.split('/')
-      return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`
+      const ConvertYear = Number(year) - 543
+      return `${ConvertYear}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`
     }
   }
 }

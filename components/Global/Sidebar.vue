@@ -1,5 +1,11 @@
 <template lang="html">
-  <v-navigation-drawer v-model="drawer" fixed app>
+  <v-navigation-drawer
+    v-model="drawer"
+    dark
+    src="https://cdn.vuetifyjs.com/images/backgrounds/bg-2.jpg"
+    fixed
+    app
+  >
     <v-list>
       <v-list-item
         v-for="(item, i) in items"
