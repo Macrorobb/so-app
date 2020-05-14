@@ -1,12 +1,18 @@
 <template lang="html">
-  <v-navigation-drawer
-    v-model="drawer"
-    dark
-    src="https://cdn.vuetifyjs.com/images/backgrounds/bg-2.jpg"
-    fixed
-    app
-  >
+  <v-navigation-drawer v-model="drawer" dark color="blue darken-3" fixed app>
     <v-list>
+      <v-list-item two-line>
+        <v-list-item-avatar>
+          <img src="https://randomuser.me/api/portraits/men/81.jpg" />
+        </v-list-item-avatar>
+
+        <v-list-item-content>
+          <v-list-item-title>Application</v-list-item-title>
+          <v-list-item-subtitle>Subtext</v-list-item-subtitle>
+        </v-list-item-content>
+      </v-list-item>
+
+      <v-divider></v-divider>
       <v-list-item
         v-for="(item, i) in items"
         :key="i"
@@ -22,6 +28,14 @@
         </v-list-item-content>
       </v-list-item>
     </v-list>
+    <template v-slot:append>
+      <div class="pa-2">
+        <v-btn block>
+          Logout
+          <v-icon right dark>mdi-logout</v-icon>
+        </v-btn>
+      </div>
+    </template>
   </v-navigation-drawer>
 </template>
 
@@ -31,7 +45,7 @@ export default {
     return {
       items: [
         {
-          icon: 'mdi-apps',
+          icon: 'mdi-home-city',
           title: 'Welcome',
           to: { name: 'index' }
         },

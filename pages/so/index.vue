@@ -1,15 +1,45 @@
 <template lang="html">
   <div>
-    <v-col cols="12">
-      <div class="flex font-weight-bold">Sale Order</div>
-    </v-col>
+    <v-row>
+      <v-col cols="6" md="6" sm="12">
+        <div class="font-weight-bold">Sale Order</div>
+      </v-col>
+      <v-col cols="6" md="6" sm="12">
+        <v-breadcrumbs
+          class="d-flex justify-end"
+          :items="[
+            {
+              text: 'Dashboard',
+              disabled: false,
+              href: 'breadcrumbs_dashboard'
+            },
+            {
+              text: 'Link 1',
+              disabled: false,
+              href: 'breadcrumbs_link_1'
+            },
+            {
+              text: 'Link 2',
+              disabled: true,
+              href: 'breadcrumbs_link_2'
+            }
+          ]"
+        >
+        </v-breadcrumbs>
+      </v-col>
+    </v-row>
 
     <v-card>
       <v-container>
         <v-form>
           <v-row>
             <v-col cols="12" md="2">
-              <v-text-field label="Doc No." outlined dense></v-text-field>
+              <v-select
+                :items="['Foo', 'Bar', 'Fizz', 'Buzz']"
+                label="Doc No."
+                dense
+                outlined
+              ></v-select>
             </v-col>
 
             <v-col cols="12" md="2">
@@ -97,10 +127,6 @@
               >
               </v-text-field>
             </v-col>
-            <v-col cols="12" md="6">
-              <v-text-field label="Product" outlined dense append-icon="search">
-              </v-text-field>
-            </v-col>
           </v-row>
         </v-form>
       </v-container>
@@ -112,7 +138,7 @@
             <v-text-field label="Product Search" append-icon="search">
             </v-text-field>
           </v-col>
-          <v-col v-for="item in items" :key="item.id" cols="3">
+          <v-col v-for="item in items" :key="item.id" cols="12" md="3" sm="12">
             <v-card class="mx-auto" outlined>
               <v-list-item three-line>
                 <v-list-item-content>
@@ -136,12 +162,18 @@
               </v-list-item>
 
               <v-card-actions>
-                <v-text-field
-                  value="0"
-                  append-outer-icon="mdi-minus-circle"
-                  prepend-icon="mdi-plus-circle"
-                ></v-text-field>
-                <v-btn color="primary" small text>Add to Cart</v-btn>
+                <v-btn icon color="blue darken-3">
+                  <v-icon>mdi-minus-circle</v-icon>
+                </v-btn>
+                <v-text-field value="0" class="text-center" reverse>
+                </v-text-field>
+                <v-btn icon color="blue darken-3">
+                  <v-icon>mdi-plus-circle</v-icon>
+                </v-btn>
+                <v-btn color="pink" small text>Add to Cart</v-btn>
+                <!-- <v-btn class="white--text" color="deep-purple accent-4" small>
+                  Add to Cart
+                </v-btn> -->
               </v-card-actions>
             </v-card>
           </v-col>
@@ -162,6 +194,19 @@
           </v-col>
         </v-row>
       </div>
+      <v-btn
+        dark
+        fab
+        bottom
+        right
+        fixed
+        color="orange"
+        @click="handleCartClicked"
+      >
+        <v-badge color="red" content="99">
+          <v-icon>mdi-cart</v-icon>
+        </v-badge>
+      </v-btn>
     </v-card>
   </div>
 </template>
@@ -313,9 +358,17 @@ export default {
       const [day, month, year] = date.split('/')
       const ConvertYear = Number(year) - 543
       return `${ConvertYear}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`
+    },
+    handleCartClicked() {
+      this.$router.push('/so/cart')
     }
   }
 }
 </script>
 
-<style lang="css" scoped></style>
+<style lang="css" scoped>
+.v-breadcrumbs {
+  margin: 0;
+  padding: 0;
+}
+</style>
